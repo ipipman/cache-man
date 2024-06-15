@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class IMCacheServer implements IMPlugin {
 
-    int port = 6378;
+    int port = 6379;
     EventLoopGroup bossGroup;
     EventLoopGroup workerGroup;
     Channel channel;
