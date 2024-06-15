@@ -1,5 +1,8 @@
-package cn.ipman.cache;
+package cn.ipman.cache.core;
 
+import cn.ipman.cache.IMPlugin;
+import cn.ipman.cache.core.IMCacheDecoder;
+import cn.ipman.cache.core.IMCacheHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
@@ -10,8 +13,6 @@ import io.netty.channel.epoll.EpollChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.redis.RedisDecoder;
-import io.netty.handler.codec.redis.RedisEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
