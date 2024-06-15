@@ -10,6 +10,8 @@ import io.netty.channel.epoll.EpollChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.redis.RedisDecoder;
+import io.netty.handler.codec.redis.RedisEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
@@ -24,7 +26,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class IMCacheServer implements IMPlugin {
 
-    int port = 6379;
+    int port = 6378;
     EventLoopGroup bossGroup;
     EventLoopGroup workerGroup;
     Channel channel;
@@ -53,8 +55,9 @@ public class IMCacheServer implements IMPlugin {
                     .handler(new LoggingHandler(LogLevel.DEBUG))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
-
+                        protected void initChannel(SocketChannel ch) {
+                            ch.pipeline().addLast(new IMCacheDecoder());
+                            ch.pipeline().addLast(new IMCacheHandler());
                         }
                     });
 
