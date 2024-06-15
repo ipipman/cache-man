@@ -8,20 +8,39 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Description for this class
+ * M缓存处理程序，负责处理缓存相关的命令请求。
  *
  * @Author IpMan
  * @Date 2024/6/15 14:02
  */
 public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
 
+    // 定义回车换行符、OK响应、INFO响应的静态字符串，用于命令响应的构建
     private static final String CRLF = "\r\n";
     private static final String OK = "OK";
     private static final String INFO = "IMCache Server[v1.0.0], created by ipman." + CRLF
             + "Mock Redis Server, at 2024-06-15 in Beijing." + CRLF;
 
+    // 全局缓存实例，用于存储和检索数据。
     public static final IMCache CACHE = new IMCache();
 
+
+    private static String[] getKeys(String[] args) {
+        int len = (args.length - 3) / 2;
+        String[] keys = new String[len];
+        for (int i = 0; i < len; i++) {
+            keys[i] = args[4 + i * 2];
+        }
+        return keys;
+    }
+
+    /**
+     * 处理接收到的缓存命令。
+     *
+     * @param ctx     通道上下文，用于发送响应。
+     * @param message 接收到的命令字符串。
+     * @throws Exception 如果处理过程中发生异常。
+     */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx,
                                 String message) throws Exception {
@@ -48,26 +67,14 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
             String value = CACHE.get(args[4]);
             integer(ctx, value == null ? 0 : value.length());
         } else if ("DEL".equals(cmd)) { // DEL ===> *4,$3,del,$1,a,$1,b,$1,c
-            int len = (args.length - 3) / 2;
-            String[] keys = new String[len];
-            for (int i = 0; i < len; i++) {
-                keys[i] = args[4 + i * 2];
-            }
+            String[] keys = getKeys(args);
             int del = CACHE.del(keys);
             integer(ctx, del);
         } else if ("EXISTS".equals(cmd)) { // EXISTS ===>  *2,$6,exists,$1,a
-            int len = (args.length - 3) / 2;
-            String[] keys = new String[len];
-            for (int i = 0; i < len; i++) {
-                keys[i] = args[4 + i * 2];
-            }
+            String[] keys = getKeys(args);
             integer(ctx, CACHE.exists(keys));
         } else if ("MGET".equals(cmd)) { // MGET ===> *4,$4,mget,$1,a,$1,b,$1,c
-            int len = (args.length - 3) / 2;
-            String[] keys = new String[len];
-            for (int i = 0; i < len; i++) {
-                keys[i] = args[4 + i * 2];
-            }
+            String[] keys = getKeys(args);
             array(ctx, CACHE.mGet(keys));
         } else if ("MSET".equals(cmd)) { // MSET ===> *7,$4,mset,$1,a,$1,1,$1,b,$1,2,$1,c,$1,3
             int len = (args.length - 3) / 4;
@@ -98,27 +105,32 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
         }
     }
 
+    // 发送错误响应
     private void error(ChannelHandlerContext ctx, String msg) {
         writeByteBuf(ctx, errorEncode(msg));
     }
 
+    // 发送数组响应
     private void array(ChannelHandlerContext ctx, String[] array) {
         writeByteBuf(ctx, arrayEncode(array));
     }
 
+    // 发送整数响应
     private void integer(ChannelHandlerContext ctx, int i) {
         writeByteBuf(ctx, integerEncode(i));
     }
 
+    // 发送复杂的string响应
     private void bulkString(ChannelHandlerContext ctx, String content) {
         writeByteBuf(ctx, bulkStringEncode(content));
     }
 
-
+    // 发送简单的string响应
     private void simpleString(ChannelHandlerContext ctx, String content) {
         writeByteBuf(ctx, simpleStringEncode(content));
     }
 
+    // 将数组编码为Redis协议格式的字符串
     private static String arrayEncode(Object[] array) {
         StringBuilder sb = new StringBuilder();
         if (array == null) {
@@ -144,14 +156,17 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
         return sb.toString();
     }
 
+    // 将整数编码为Redis协议格式的字符串
     private static String integerEncode(int i) {
         return ":" + i + CRLF;
     }
 
+    // 将错误信息编码为Redis协议格式的字符串
     private static String errorEncode(String error) {
         return "-" + error + CRLF;
     }
 
+    // 将复杂的string编码为Redis协议格式的字符串
     private static String bulkStringEncode(String content) {
         String ret;
         if (content == null) {
@@ -164,6 +179,7 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
         return ret + CRLF;
     }
 
+    // 将简单的string编码为Redis协议格式的字符串
     private static String simpleStringEncode(String content) {
         String ret;
         if (content == null) {
@@ -176,7 +192,7 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
         return ret + CRLF;
     }
 
-
+    // 将编码后的字符串写入ByteBuf并发送
     private void writeByteBuf(ChannelHandlerContext ctx, String content) {
         System.out.println("wrap byte buffer and reply: " + content);
         ByteBuf buffer = Unpooled.wrappedBuffer(content.getBytes(StandardCharsets.UTF_8));
@@ -184,10 +200,6 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
     }
 
 }
-
-
-
-
 
 // ========================== RedisMessage  ==================================
 //    @Override
