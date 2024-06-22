@@ -18,6 +18,7 @@ public class IMCache {
     Map<String, CacheEntry<?>> map = new HashMap<>();
 
 
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -111,7 +112,7 @@ public class IMCache {
 
 
     @SuppressWarnings("unchecked")
-    public String[] lPpop(String key, int count) {
+    public String[] lPop(String key, int count) {
         CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
         if (entry == null) return null;
         LinkedList<String> exist = entry.getValue();
@@ -122,6 +123,34 @@ public class IMCache {
         int index = 0;
         while (index < len) {
             ret[index++] = exist.pollFirst();
+        }
+        return ret;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Integer rPush(String key, String[] vals) {
+        CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
+        if (entry == null) {
+            entry = new CacheEntry<>(new LinkedList<>());
+            this.map.put(key, entry);
+        }
+        LinkedList<String> exist = entry.getValue();
+        exist.addAll(List.of(vals));
+        return vals.length;
+    }
+
+    @SuppressWarnings("unchecked")
+    public String[] rPop(String key, int count) {
+        CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
+        if (entry == null) return null;
+        LinkedList<String> exist = entry.getValue();
+        if (exist == null) return null;
+
+        int len = Math.min(count, exist.size());
+        String[] ret = new String[len];
+        int index = 0;
+        while (index < len) {
+            ret[index++] = exist.removeLast();
         }
         return ret;
     }

@@ -42,6 +42,8 @@ public class Commands {
         // Lpush, Rpush, Lpop, Llen, Lindex, Lrange
         register(new LpushCommand());
         register(new LpopCommand());
+        register(new RpushCommand());
+        register(new RpopCommand());
 
     }
 

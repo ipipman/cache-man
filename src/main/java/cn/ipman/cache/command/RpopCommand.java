@@ -10,12 +10,12 @@ import cn.ipman.cache.core.Reply;
  * @Author IpMan
  * @Date 2024/6/22 13:27
  */
-public class LpopCommand implements Command {
+public class RpopCommand implements Command {
 
     @Override
     public String name() {
         // lpop ===> *3,$4,lpop,$2,l1,$1,2
-        return "LPOP";
+        return "RPOP";
     }
 
     @Override
@@ -24,11 +24,11 @@ public class LpopCommand implements Command {
         int count = 1;
         if (args.length > 6) {
             count = Integer.parseInt(getValue(args));
-            return Reply.array(cache.lPop(key, count));
+            return Reply.array(cache.rPop(key, count));
         }
 
-        String[] lPop = cache.lPop(key, count);
-        return Reply.string(lPop == null || lPop.length == 0 ? null : lPop[0]);
+        String[] rPop = cache.rPop(key, count);
+        return Reply.string(rPop == null || rPop.length == 0 ? null : rPop[0]);
 
     }
 
