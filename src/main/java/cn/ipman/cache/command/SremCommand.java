@@ -14,7 +14,7 @@ public class SremCommand implements Command {
 
     @Override
     public String name() {
-        // LPUSH ===> *4,$5,lpush,$1,a,$1,2,$1,3
+        // srem ===> *3,$4,srem,$2,s1,$1,1
         return "SREM";
     }
 

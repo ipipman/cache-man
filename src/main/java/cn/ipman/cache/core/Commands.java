@@ -66,9 +66,13 @@ public class Commands {
         register(new HmgetCommand());
         register(new HexistsCommand());
 
-
         // zset
-
+        register(new ZaddCommand());
+        register(new ZcardCommand());
+        register(new ZcountCommand());
+        register(new ZrankCommand());
+        register(new ZremCommand());
+        register(new ZscoreCommand());
 
     }
 

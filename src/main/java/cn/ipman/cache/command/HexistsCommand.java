@@ -14,7 +14,7 @@ public class HexistsCommand implements Command {
 
     @Override
     public String name() {
-        // hget ===>  *3,$4,hget,$2,h1,$2,f2
+        // hexists ===> *3,$7,hexists,$2,h1,$2,f3
         return "HEXISTS";
     }
 

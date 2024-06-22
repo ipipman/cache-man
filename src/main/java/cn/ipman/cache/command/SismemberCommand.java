@@ -14,7 +14,7 @@ public class SismemberCommand implements Command {
 
     @Override
     public String name() {
-        // LPUSH ===> *4,$5,lpush,$1,a,$1,2,$1,3
+        // sismember ===> *3,$9,sismember,$2,s1,$1,2
         return "SISMEMBER";
     }
 

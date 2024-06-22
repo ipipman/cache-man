@@ -14,7 +14,7 @@ public class ScardCommand implements Command {
 
     @Override
     public String name() {
-        // LPUSH ===> *4,$5,lpush,$1,a,$1,2,$1,3
+        // scard ===> *2,$5,scard,$2,s1
         return "SCARD";
     }
 

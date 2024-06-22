@@ -14,7 +14,7 @@ public class HlenCommand implements Command {
 
     @Override
     public String name() {
-        // hget ===>  *3,$4,hget,$2,h1,$2,f2
+        // hlen ===>   *2,$4,hlen,$2,h1
         return "HLEN";
     }
 

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -24,6 +25,14 @@ public class IMCache {
     @NoArgsConstructor
     public static class CacheEntry<T> {
         private T value;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ZSetEntry {
+        private String value;
+        private double score;
     }
 
     // ========================= string start ==========================
@@ -355,6 +364,78 @@ public class IMCache {
                 .map(exist::remove).filter(Objects::nonNull).count();
     }
 
-
     // ========================= hash end ==========================
+
+
+    // ========================= zset end ==========================
+
+    @SuppressWarnings("unchecked")
+    public Integer zAdd(String key, String[] vals, double[] scores) {
+        CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
+        if (entry == null) {
+            entry = new CacheEntry<>(new LinkedHashSet<>());
+            this.map.put(key, entry);
+        }
+
+        LinkedHashSet<ZSetEntry> exist = entry.getValue();
+        for (int i = 0; i < vals.length; i++) {
+            exist.add(new ZSetEntry(vals[i], scores[i]));
+        }
+        return exist.size();
+    }
+
+    public Integer zCard(String key) {
+        CacheEntry<?> entry = map.get(key);
+        if (entry == null) return 0;
+        LinkedHashSet<?> exist = (LinkedHashSet<?>) entry.getValue();
+        return exist.size();
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public Integer zCount(String key, double min, double max) {
+        CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
+        if (entry == null) return 0;
+        LinkedHashSet<ZSetEntry> exist = entry.getValue();
+        return (int) exist.stream()
+                .filter(x -> x.getScore() >= min && x.getScore() <= max)
+                .count();
+    }
+
+    @SuppressWarnings("unchecked")
+    public Double zScore(String key, String val) {
+        CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
+        if (entry == null) return null;
+        LinkedHashSet<ZSetEntry> exist = entry.getValue();
+        return exist.stream()
+                .filter(x -> x.getValue().equals(val))
+                .map(ZSetEntry::getScore)
+                .findFirst()
+                .orElse(null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Integer zRank(String key, String val) {
+        CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
+        if (entry == null) return null;
+        LinkedHashSet<ZSetEntry> exist = entry.getValue();
+
+        Double source = zScore(key, val);
+        if (source == null) return null;
+        return (int) exist.stream().filter(x -> x.getScore() < source).count();
+    }
+
+    @SuppressWarnings("unchecked")
+    public Integer zRem(String key, String[] vals) {
+        CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
+        if (entry == null) return 0;
+        LinkedHashSet<ZSetEntry> exist = entry.getValue();
+        return vals == null ? 0 : (int) Arrays.stream(vals)
+                .map(x -> exist.removeIf(y -> y.getValue().equals(x)))
+                .filter(x -> x)
+                .count();
+    }
+
+
+    // ========================= zset end ==========================
 }

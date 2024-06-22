@@ -14,7 +14,7 @@ public class HmgetCommand implements Command {
 
     @Override
     public String name() {
-        // hget ===>  *3,$4,hget,$2,h1,$2,f2
+        // hmget ===> *5,$5,hmget,$2,h1,$2,f1,$2,f2,$2,f3
         // return this.getClass().getSimpleName().replace("Command", "").toUpperCase();
         return "HMGET";
     }

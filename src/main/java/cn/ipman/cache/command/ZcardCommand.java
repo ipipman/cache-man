@@ -10,18 +10,18 @@ import cn.ipman.cache.core.Reply;
  * @Author IpMan
  * @Date 2024/6/22 13:27
  */
-public class SmembersCommand implements Command {
+public class ZcardCommand implements Command {
 
     @Override
     public String name() {
-        // smembers ===> *2,$8,smembers,$2,s1
-        return "SMEMBERS";
+        // zcard ===> *2,$5,zcard,$1,z
+        return "ZCARD";
     }
 
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
-        return Reply.array(cache.smembers(key));
+        return Reply.integer(cache.zCard(key));
     }
 
 
