@@ -50,6 +50,7 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
 
         String cmd = args[2].toUpperCase();
 
+        // 根据redis操作指令,获取具体的执行方法
         Command command = Commands.get(cmd);
         if (command != null) {
             Reply<?> reply = command.exec(CACHE, args);
@@ -58,44 +59,7 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
             return;
         }
 
-        if ("PING".equals(cmd)) {       // PING ===> *1,$4,ping
-            String ret = "PONG";
-            if (args.length >= 5) {
-                ret = args[4];
-            }
-            simpleString(ctx, ret);
-        } else if ("INFO".equals(cmd)) {
-            bulkString(ctx, INFO);
-        } else if ("SET".equals(cmd)) { // SET ===> *3,$3,set,$1,a,$1,1
-            CACHE.set(args[4], args[6]);
-            simpleString(ctx, OK);
-        } else if ("GET".equals(cmd)) { // GET ===> *2,$3,get,$1,a
-            String value = CACHE.get(args[4]);
-            bulkString(ctx, value);
-        } else if ("STRLEN".equals(cmd)) { // STRLEN ===> *1,$6,strlen
-            String value = CACHE.get(args[4]);
-            integer(ctx, value == null ? 0 : value.length());
-        } else if ("DEL".equals(cmd)) { // DEL ===> *4,$3,del,$1,a,$1,b,$1,c
-            String[] keys = getKeys(args);
-            int del = CACHE.del(keys);
-            integer(ctx, del);
-        } else if ("EXISTS".equals(cmd)) { // EXISTS ===>  *2,$6,exists,$1,a
-            String[] keys = getKeys(args);
-            integer(ctx, CACHE.exists(keys));
-        } else if ("MGET".equals(cmd)) { // MGET ===> *4,$4,mget,$1,a,$1,b,$1,c
-            String[] keys = getKeys(args);
-            array(ctx, CACHE.mGet(keys));
-        } else if ("MSET".equals(cmd)) { // MSET ===> *7,$4,mset,$1,a,$1,1,$1,b,$1,2,$1,c,$1,3
-            int len = (args.length - 3) / 4;
-            String[] keys = new String[len];
-            String[] vals = new String[len];
-            for (int i = 0; i < len; i++) {
-                keys[i] = args[4 + i * 4];
-                vals[i] = args[6 + i * 4];
-            }
-            CACHE.mSet(keys, vals);
-            simpleString(ctx, OK);
-        } else if ("INCR".equals(cmd)) {    // INCR ===> *3,$4,incr,$1,a,$1,1
+         if ("INCR".equals(cmd)) {    // INCR ===> *3,$4,incr,$1,a,$1,1
             String key = args[4];
             try {
                 integer(ctx, CACHE.incr(key));

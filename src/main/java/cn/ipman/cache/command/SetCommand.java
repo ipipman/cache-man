@@ -8,22 +8,21 @@ import cn.ipman.cache.core.Reply;
  * Description for this class
  *
  * @Author IpMan
- * @Date 2024/6/22 13:06
+ * @Date 2024/6/22 13:27
  */
-public class PingCommand implements Command {
+public class SetCommand implements Command {
 
     @Override
     public String name() {
-        // PING ===> *1,$4,ping
-        return "PING";
+        // SET ===> *3,$3,set,$1,a,$1,1
+        return "SET";
     }
 
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
-        String ret = "PONG";
-        if (args.length >= 5) {
-            ret = getKey(args);
-        }
-        return Reply.string(ret);
+        String key = getKey(args);
+        String val = getValue(args);
+        cache.set(key, val);
+        return Reply.string(OK);
     }
 }

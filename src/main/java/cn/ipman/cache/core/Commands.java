@@ -1,9 +1,9 @@
 package cn.ipman.cache.core;
 
-import cn.ipman.cache.command.InfoCommand;
-import cn.ipman.cache.command.PingCommand;
+import cn.ipman.cache.command.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class Commands {
 
-    private static Map<String, Command> ALL = new HashMap<>();
+    private static Map<String, Command> ALL = new LinkedHashMap<>();
 
     static {
         initCommands();
@@ -23,6 +23,13 @@ public class Commands {
     private static void initCommands() {
         register(new PingCommand());
         register(new InfoCommand());
+        register(new GetCommand());
+        register(new SetCommand());
+        register(new StrlenCommand());
+        register(new DelCommand());
+        register(new ExistsCommand());
+        register(new MgetCommand());
+        register(new MsetCommand());
     }
 
     public static void register(Command command) {

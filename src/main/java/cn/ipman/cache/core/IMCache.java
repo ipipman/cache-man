@@ -30,6 +30,10 @@ public class IMCache {
                 .map(map::remove).filter(Objects::nonNull).count();
     }
 
+    public Integer strlen(String key) {
+        return get(key) == null ? 0 : get(key).length();
+    }
+
     public int exists(String... keys) {
         return keys == null ? 0 : (int) Arrays.stream(keys)
                 .map(map::containsKey).filter(x -> x).count();
