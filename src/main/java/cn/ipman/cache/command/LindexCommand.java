@@ -10,19 +10,19 @@ import cn.ipman.cache.core.Reply;
  * @Author IpMan
  * @Date 2024/6/22 13:27
  */
-public class RpushCommand implements Command {
+public class LindexCommand implements Command {
 
     @Override
     public String name() {
-        // rPUSH ===> *4,$5,rpush,$1,a,$1,2,$1,3
-        return "RPUSH";
+        // LINDEX ===> *4,$5,lpush,$1,a,$1,2,$1,3
+        return "LINDEX";
     }
 
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
-        String[] vals = getParamsNoKey(args);
-        return Reply.integer(cache.rPush(key, vals));
+        int index = Integer.parseInt(getValue(args));
+        return Reply.string(cache.lindex(key, index));
     }
 
 

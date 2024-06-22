@@ -44,6 +44,8 @@ public class Commands {
         register(new LpopCommand());
         register(new RpushCommand());
         register(new RpopCommand());
+        register(new LlenCommand());
+        register(new LindexCommand());
 
     }
 

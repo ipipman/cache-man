@@ -14,7 +14,7 @@ public class RpopCommand implements Command {
 
     @Override
     public String name() {
-        // lpop ===> *3,$4,lpop,$2,l1,$1,2
+        // rpop ===> *3,$4,rpop,$2,l1,$1,2
         return "RPOP";
     }
 

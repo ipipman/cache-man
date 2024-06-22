@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -16,7 +17,6 @@ import java.util.*;
 public class IMCache {
 
     Map<String, CacheEntry<?>> map = new HashMap<>();
-
 
 
     @Data
@@ -135,6 +135,9 @@ public class IMCache {
             this.map.put(key, entry);
         }
         LinkedList<String> exist = entry.getValue();
+        if (vals.length == 0) {
+            return 0;
+        }
         exist.addAll(List.of(vals));
         return vals.length;
     }
@@ -154,6 +157,27 @@ public class IMCache {
         }
         return ret;
     }
+
+
+    @SuppressWarnings("unchecked")
+    public Integer llen(String key) {
+        CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
+        if (entry == null) return 0;
+        LinkedList<String> exist = entry.getValue();
+        if (exist == null) return 0;
+        return exist.size();
+    }
+
+    @SuppressWarnings("unchecked")
+    public String lindex(String key, int index) {
+        CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
+        if (entry == null) return null;
+        LinkedList<String> exist = entry.getValue();
+        if (exist == null) return null;
+        if (index >= exist.size()) return null;
+        return exist.get(index);
+    }
+
 
     // ========================= list end ==========================
 
