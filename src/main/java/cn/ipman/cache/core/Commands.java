@@ -21,9 +21,13 @@ public class Commands {
     }
 
     private static void initCommands() {
+
+        // common
         register(new CmdCommand());
         register(new PingCommand());
         register(new InfoCommand());
+
+        // string
         register(new GetCommand());
         register(new SetCommand());
         register(new StrlenCommand());
@@ -33,6 +37,12 @@ public class Commands {
         register(new MsetCommand());
         register(new IncrCommand());
         register(new DecrCommand());
+
+        // list
+        // Lpush, Rpush, Lpop, Llen, Lindex, Lrange
+        register(new LpushCommand());
+        register(new LpopCommand());
+
     }
 
     public static void register(Command command) {

@@ -18,21 +18,9 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
     // 定义回车换行符、OK响应、INFO响应的静态字符串，用于命令响应的构建
     private static final String CRLF = "\r\n";
     private static final String OK = "OK";
-    private static final String INFO = "IMCache Server[v1.0.0], created by ipman." + CRLF
-            + "Mock Redis Server, at 2024-06-15 in Beijing." + CRLF;
 
     // 全局缓存实例，用于存储和检索数据。
     public static final IMCache CACHE = new IMCache();
-
-
-    private static String[] getKeys(String[] args) {
-        int len = (args.length - 3) / 2;
-        String[] keys = new String[len];
-        for (int i = 0; i < len; i++) {
-            keys[i] = args[4 + i * 2];
-        }
-        return keys;
-    }
 
     /**
      * 处理接收到的缓存命令。

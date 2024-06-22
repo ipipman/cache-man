@@ -28,6 +28,15 @@ public interface Command {
         return keys;
     }
 
+    default String[] getParamsNoKey(String[] args) {
+        int len = (args.length - 5) / 2;
+        String[] keys = new String[len];
+        for (int i = 0; i < len; i++) {
+            keys[i] = args[6 + i * 2];
+        }
+        return keys;
+    }
+
     default String[] getKeys(String[] args) {
         int len = (args.length - 3) / 4;
         String[] keys = new String[len];
