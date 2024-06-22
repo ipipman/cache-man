@@ -10,17 +10,21 @@ import cn.ipman.cache.core.Reply;
  * @Author IpMan
  * @Date 2024/6/22 13:27
  */
-public class DelCommand implements Command {
+public class IncrCommand implements Command {
 
     @Override
     public String name() {
-        // DEL ===> *4,$3,del,$1,a,$1,b,$1,c
-        return "DEL";
+        // INCR ===> *3,$4,incr,$1,a,$1,1
+        return "INCR";
     }
 
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
-        String[] keys = getParams(args);
-        return Reply.integer(cache.del(keys));
+        String key = getKey(args);
+        try {
+            return Reply.integer(cache.incr(key));
+        } catch (NumberFormatException e) {
+            return Reply.error("NFE " + key + " value is not integer");
+        }
     }
 }

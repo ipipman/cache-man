@@ -20,7 +20,7 @@ public class MgetCommand implements Command {
 
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
-        String[] keys = getKeys(args);
+        String[] keys = getParams(args);
         return Reply.array(cache.mGet(keys));
     }
 }

@@ -48,33 +48,16 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
         String[] args = message.split(CRLF);
         System.out.println("IMCacheHandler ==> " + String.join(",", args));
 
-        String cmd = args[2].toUpperCase();
-
         // 根据redis操作指令,获取具体的执行方法
+        String cmd = args[2].toUpperCase();
         Command command = Commands.get(cmd);
         if (command != null) {
             Reply<?> reply = command.exec(CACHE, args);
             System.out.println("CMD[" + cmd + "] => " + reply.type + " => " + reply.value);
             replyContext(ctx, reply);
-            return;
-        }
-
-         if ("INCR".equals(cmd)) {    // INCR ===> *3,$4,incr,$1,a,$1,1
-            String key = args[4];
-            try {
-                integer(ctx, CACHE.incr(key));
-            } catch (NumberFormatException e) {
-                error(ctx, "NFE " + key + " value is not integer");
-            }
-        } else if ("DECR".equals(cmd)) {        // DECR ===>  *2,$4,decr,$1,a
-            String key = args[4];
-            try {
-                integer(ctx, CACHE.decr(key));
-            } catch (NumberFormatException e) {
-                error(ctx, "NFE " + key + " value is not integer");
-            }
-        } else { // *2,$7,COMMAND,$4,DOCS
-            simpleString(ctx, OK);
+        } else {
+            Reply<?> reply = Reply.error("ERR unsupported command '" + cmd + "'");
+            replyContext(ctx, reply);
         }
     }
 

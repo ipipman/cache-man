@@ -21,6 +21,7 @@ public class Commands {
     }
 
     private static void initCommands() {
+        register(new CmdCommand());
         register(new PingCommand());
         register(new InfoCommand());
         register(new GetCommand());
@@ -30,6 +31,8 @@ public class Commands {
         register(new ExistsCommand());
         register(new MgetCommand());
         register(new MsetCommand());
+        register(new IncrCommand());
+        register(new DecrCommand());
     }
 
     public static void register(Command command) {

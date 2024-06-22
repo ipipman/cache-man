@@ -20,14 +20,10 @@ public class MsetCommand implements Command {
 
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
-        int len = (args.length - 3) / 4;
-        String[] keys = new String[len];
-        String[] vals = new String[len];
-        for (int i = 0; i < len; i++) {
-            keys[i] = args[4 + i * 4];
-            vals[i] = args[6 + i * 4];
-        }
+        String[] keys = getKeys(args);
+        String[] vals = getValues(args);
         cache.mSet(keys, vals);
         return Reply.string(OK);
     }
+
 }
