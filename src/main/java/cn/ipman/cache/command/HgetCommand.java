@@ -10,20 +10,21 @@ import cn.ipman.cache.core.Reply;
  * @Author IpMan
  * @Date 2024/6/22 13:27
  */
-public class SaddCommand implements Command {
+public class HgetCommand implements Command {
 
     @Override
     public String name() {
-        // sadd ===> *1,$4,sadd
-        return "SADD";
+        // hget ===>  *3,$4,hget,$2,h1,$2,f2
+        return "HGET";
     }
 
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
-        String[] vals = getParamsNoKey(args);
-        return Reply.integer(cache.sadd(key, vals));
+        String hKey = getValue(args);
+        return Reply.bulkString(cache.hGet(key, hKey));
     }
+
 
 
 }
