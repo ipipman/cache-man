@@ -18,7 +18,6 @@ public class IMCache {
 
     Map<String, CacheEntry<?>> map = new HashMap<>();
 
-
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -176,6 +175,28 @@ public class IMCache {
         if (exist == null) return null;
         if (index >= exist.size()) return null;
         return exist.get(index);
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public String[] lrange(String key, int start, int end) {
+        CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
+        if (entry == null) return null;
+        LinkedList<String> exist = entry.getValue();
+        if (exist == null) return null;
+
+        int size = exist.size();
+        if (start >= size) return null;
+        if (end >= size) {
+            end = size - 1;
+        }
+
+        int len = Math.min(size, end - start + 1);
+        String[] ret = new String[len];
+        for (int i = 0; i < len; i++) {
+            ret[i] = exist.get(start + i);
+        }
+        return ret;
     }
 
 

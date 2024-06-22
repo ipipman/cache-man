@@ -14,7 +14,7 @@ public class LlenCommand implements Command {
 
     @Override
     public String name() {
-        // LLEN ===> *4,$5,lpush,$1,a,$1,2,$1,3
+        // LLEN ===> *2,$4,llen,$2,l1
         return "LLEN";
     }
 
