@@ -348,6 +348,7 @@ public class IMCache {
 
     @SuppressWarnings("unchecked")
     public Integer hExists(String key, String hKey) {
+        if (hKey == null) return 0;
         CacheEntry<LinkedHashMap<String, String>> entry = (CacheEntry<LinkedHashMap<String, String>>) map.get(key);
         if (entry == null) return 0;
         LinkedHashMap<String, String> exist = entry.getValue();
@@ -371,6 +372,10 @@ public class IMCache {
 
     @SuppressWarnings("unchecked")
     public Integer zAdd(String key, String[] vals, double[] scores) {
+        if (vals == null || vals.length == 0) return 0;
+        if (scores == null || scores.length == 0) return 0;
+        if (vals.length != scores.length) throw new RuntimeException("vals and scores must be same length");
+
         CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
         if (entry == null) {
             entry = new CacheEntry<>(new LinkedHashSet<>());
@@ -394,6 +399,7 @@ public class IMCache {
 
     @SuppressWarnings("unchecked")
     public Integer zCount(String key, double min, double max) {
+        if (min > max) throw new RuntimeException("min must be less than max");
         CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
         if (entry == null) return 0;
         LinkedHashSet<ZSetEntry> exist = entry.getValue();
@@ -404,6 +410,7 @@ public class IMCache {
 
     @SuppressWarnings("unchecked")
     public Double zScore(String key, String val) {
+        if (val == null) return null;
         CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
         if (entry == null) return null;
         LinkedHashSet<ZSetEntry> exist = entry.getValue();
