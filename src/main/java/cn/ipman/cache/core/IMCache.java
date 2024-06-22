@@ -199,8 +199,85 @@ public class IMCache {
         return ret;
     }
 
-
     // ========================= list end ==========================
 
 
+
+    // ========================= set start ==========================
+    @SuppressWarnings("unchecked")
+    public Integer sadd(String key, String[] vals) {
+        CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
+        if (entry == null) {
+            entry = new CacheEntry<>(new LinkedHashSet<>());
+            this.map.put(key, entry);
+        }
+        LinkedHashSet<String> exist = entry.getValue();
+        if (vals == null || vals.length == 0){
+            return 0;
+        }
+        exist.addAll(Arrays.asList(vals));
+        return vals.length;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public String[] smembers(String key) {
+        CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
+        if (entry == null) return null;
+        LinkedHashSet<String> exist = entry.getValue();
+        if (exist == null) return null;
+        return  exist.toArray(String[]::new);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Integer scard(String key) {
+        CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
+        if (entry == null) return 0;
+        LinkedHashSet<String> exist = entry.getValue();
+        if (exist == null) return 0;
+        return exist.size();
+    }
+
+    @SuppressWarnings("unchecked")
+    public Integer sismember(String key, String val) {
+        CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
+        if (entry == null) return 0;
+        LinkedHashSet<String> exist = entry.getValue();
+        return exist.contains(val) ? 1 : 0;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Integer srem(String key, String[] vals) {
+        CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
+        if (entry == null) return 0;
+        LinkedHashSet<String> exist = entry.getValue();
+        return vals == null ? 0 : (int) Arrays.stream(vals)
+                .map(exist::remove).filter(x -> x).count();
+    }
+
+    Random random = new Random();
+
+    @SuppressWarnings("unchecked")
+    public String[] sPop(String key, int count) {
+        CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
+        if (entry == null) return null;
+        LinkedHashSet<String> exist = entry.getValue();
+        if (exist == null) return null;
+
+        int len = Math.min(count, exist.size());
+        String[] ret = new String[len];
+        int index = 0; // spop 是随机移除
+        while (index < len) {
+            String[] array = exist.toArray(String[]::new);
+            String obj = array[random.nextInt(exist.size())];
+            exist.remove(obj);
+            ret[index++] = obj;
+        }
+        return ret;
+    }
+
+
+
+
+    // ========================= set end ==========================
 }
