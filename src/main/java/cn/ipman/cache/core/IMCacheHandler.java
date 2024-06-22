@@ -49,6 +49,15 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
         System.out.println("IMCacheHandler ==> " + String.join(",", args));
 
         String cmd = args[2].toUpperCase();
+
+        Command command = Commands.get(cmd);
+        if (command != null) {
+            Reply<?> reply = command.exec(CACHE, args);
+            System.out.println("CMD[" + cmd + "] => " + reply.type + " => " + reply.value);
+            replyContext(ctx, reply);
+            return;
+        }
+
         if ("PING".equals(cmd)) {       // PING ===> *1,$4,ping
             String ret = "PONG";
             if (args.length >= 5) {
@@ -102,6 +111,28 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
             }
         } else { // *2,$7,COMMAND,$4,DOCS
             simpleString(ctx, OK);
+        }
+    }
+
+    private void replyContext(ChannelHandlerContext ctx, Reply<?> reply) {
+        switch (reply.getType()) {
+            case INT:
+                integer(ctx, (Integer) reply.getValue());
+                break;
+            case ERROR:
+                error(ctx, (String) reply.getValue());
+                break;
+            case SIMPLE_STRING:
+                simpleString(ctx, (String) reply.getValue());
+                break;
+            case BULK_STRING:
+                bulkString(ctx, (String) reply.getValue());
+                break;
+            case ARRAY:
+                array(ctx, (String[]) reply.getValue());
+                break;
+            default:
+                simpleString(ctx, OK);
         }
     }
 
