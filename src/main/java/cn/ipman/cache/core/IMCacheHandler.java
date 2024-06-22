@@ -40,9 +40,14 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
         String cmd = args[2].toUpperCase();
         Command command = Commands.get(cmd);
         if (command != null) {
-            Reply<?> reply = command.exec(CACHE, args);
-            System.out.println("CMD[" + cmd + "] => " + reply.type + " => " + reply.value);
-            replyContext(ctx, reply);
+            try {
+                Reply<?> reply = command.exec(CACHE, args);
+                System.out.println("CMD[" + cmd + "] => " + reply.type + " => " + reply.value);
+                replyContext(ctx, reply);
+            } catch (Exception e) {
+                Reply<?> reply = Reply.error("ERR exception with msg: '" + e.getMessage() + "'");
+                replyContext(ctx, reply);
+            }
         } else {
             Reply<?> reply = Reply.error("ERR unsupported command '" + cmd + "'");
             replyContext(ctx, reply);
