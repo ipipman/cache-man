@@ -1,6 +1,6 @@
 package cn.ipman.cache.command.common;
 
-import cn.ipman.cache.core.Command;
+import cn.ipman.cache.command.Command;
 import cn.ipman.cache.core.IMCache;
 import cn.ipman.cache.core.Reply;
 

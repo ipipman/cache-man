@@ -1,9 +1,8 @@
 package cn.ipman.cache.command.zset;
 
-import cn.ipman.cache.core.Command;
+import cn.ipman.cache.command.Command;
 import cn.ipman.cache.core.IMCache;
 import cn.ipman.cache.core.Reply;
-import com.sun.jdi.request.StepRequest;
 
 import java.util.Arrays;
 

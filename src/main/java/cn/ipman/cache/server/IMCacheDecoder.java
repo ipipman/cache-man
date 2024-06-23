@@ -1,4 +1,4 @@
-package cn.ipman.cache.core;
+package cn.ipman.cache.server;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

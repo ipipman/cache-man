@@ -1,8 +1,5 @@
-package cn.ipman.cache.core;
+package cn.ipman.cache.server;
 
-import cn.ipman.cache.IMPlugin;
-import cn.ipman.cache.core.IMCacheDecoder;
-import cn.ipman.cache.core.IMCacheHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
@@ -25,7 +22,7 @@ import org.springframework.stereotype.Component;
  * @Date 2024/6/15 13:37
  */
 @Component
-public class IMCacheServer implements IMPlugin {
+public class IMCacheServer implements IMServerPlugin {
 
     int port = 6379;
     EventLoopGroup bossGroup;

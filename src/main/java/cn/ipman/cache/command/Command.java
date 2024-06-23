@@ -1,4 +1,7 @@
-package cn.ipman.cache.core;
+package cn.ipman.cache.command;
+
+import cn.ipman.cache.core.IMCache;
+import cn.ipman.cache.core.Reply;
 
 public interface Command {
 

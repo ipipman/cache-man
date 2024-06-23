@@ -1,5 +1,9 @@
-package cn.ipman.cache.core;
+package cn.ipman.cache.server;
 
+import cn.ipman.cache.command.Command;
+import cn.ipman.cache.command.Commands;
+import cn.ipman.cache.core.IMCache;
+import cn.ipman.cache.core.Reply;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -27,11 +31,9 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
      *
      * @param ctx     通道上下文，用于发送响应。
      * @param message 接收到的命令字符串。
-     * @throws Exception 如果处理过程中发生异常。
      */
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx,
-                                String message) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, String message) {
 
         String[] args = message.split(CRLF);
         System.out.println("IMCacheHandler ==> " + String.join(",", args));
@@ -42,7 +44,7 @@ public class IMCacheHandler extends SimpleChannelInboundHandler<String> {
         if (command != null) {
             try {
                 Reply<?> reply = command.exec(CACHE, args);
-                System.out.println("CMD[" + cmd + "] => " + reply.type + " => " + reply.value);
+                System.out.println("CMD[" + cmd + "] => " + reply.getType() + " => " + reply.getValue());
                 replyContext(ctx, reply);
             } catch (Exception e) {
                 Reply<?> reply = Reply.error("ERR exception with msg: '" + e.getMessage() + "'");

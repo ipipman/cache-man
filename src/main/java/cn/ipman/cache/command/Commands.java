@@ -1,4 +1,4 @@
-package cn.ipman.cache.core;
+package cn.ipman.cache.command;
 
 import cn.ipman.cache.command.common.*;
 import cn.ipman.cache.command.hash.*;
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class Commands {
 
-    private static Map<String, Command> ALL = new LinkedHashMap<>();
+    private static final Map<String, Command> ALL = new LinkedHashMap<>();
 
     static {
         initCommands();
