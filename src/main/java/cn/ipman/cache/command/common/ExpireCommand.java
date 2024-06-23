@@ -10,17 +10,18 @@ import cn.ipman.cache.core.Reply;
  * @Author IpMan
  * @Date 2024/6/22 14:16
  */
-public class TTLCommand implements Command {
+public class ExpireCommand implements Command {
 
     @Override
     public String name() {
-        // ttl ===>  *2,$3,ttl,$1,a
-        return "TTL";
+        // *2,$7,COMMAND,$4,DOCS
+        return "EXPIRE";
     }
 
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
-        return Reply.integer(cache.ttl(key));
+        long ttl = Long.parseLong(getValue(args));
+        return Reply.integer(cache.expire(key, ttl));
     }
 }

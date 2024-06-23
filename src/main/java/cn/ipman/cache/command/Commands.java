@@ -31,6 +31,7 @@ public class Commands {
         register(new PingCommand());
         register(new InfoCommand());
         register(new TTLCommand());
+        register(new ExpireCommand());
 
         // string
         register(new GetCommand());

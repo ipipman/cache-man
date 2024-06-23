@@ -30,6 +30,10 @@ public class IMCache {
     public int ttl(String key) {
         return commonOperator.ttl(key);
     }
+
+    public int expire(String key, long ttl) {
+        return commonOperator.expire(key, ttl);
+    }
     // ========================= common end ==========================
 
 
