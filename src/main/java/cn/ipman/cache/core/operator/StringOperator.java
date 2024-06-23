@@ -3,9 +3,7 @@ package cn.ipman.cache.core.operator;
 import cn.ipman.cache.core.AbstractOperator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Description for this class
