@@ -25,6 +25,20 @@ public abstract class AbstractOperator {
         return map.get(key);
     }
 
+    public boolean checkInvalid(String key) {
+        CacheEntry<?> entry = getCacheEntry(key);
+        if (entry == null || entry.getValue() == null) return true;
+        long current = System.currentTimeMillis();
+        // 如果key已过期,访问时删除
+        if (entry.getTtl() > 0 && (current - entry.getTs()) > entry.getTtl()) {
+            System.out.printf("KEY[%s] expire cause CURRENT[%d]-TS[%d] > TTL[%d] ms%n",
+                    key, current, entry.getTs(), entry.getTtl());
+            map.remove(key);
+            return true;
+        }
+        return false;
+    }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -35,7 +49,7 @@ public abstract class AbstractOperator {
 
         public final static long DEFAULT_TTL = -1000L;
 
-        public CacheEntry(T v){
+        public CacheEntry(T v) {
             value = v;
             ts = System.currentTimeMillis();    // created timestamp
             ttl = DEFAULT_TTL;                  // default alive ttl

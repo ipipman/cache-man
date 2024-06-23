@@ -34,6 +34,7 @@ public class ZSetOperator extends AbstractOperator {
     }
 
     public Integer zCard(String key) {
+        if (checkInvalid(key)) return 0;
         CacheEntry<?> entry = map.get(key);
         if (entry == null) return 0;
         LinkedHashSet<?> exist = (LinkedHashSet<?>) entry.getValue();
@@ -43,6 +44,7 @@ public class ZSetOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public Integer zCount(String key, double min, double max) {
+        if (checkInvalid(key)) return 0;
         if (min > max) throw new RuntimeException("min must be less than max");
         CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
         if (entry == null) return 0;
@@ -54,6 +56,7 @@ public class ZSetOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public Double zScore(String key, String val) {
+        if (checkInvalid(key)) return null;
         if (val == null) return null;
         CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
         if (entry == null) return null;
@@ -67,17 +70,19 @@ public class ZSetOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public Integer zRank(String key, String val) {
+        if (checkInvalid(key)) return -1;
         CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
-        if (entry == null) return null;
+        if (entry == null) return -1;
         LinkedHashSet<ZSetEntry> exist = entry.getValue();
 
         Double source = zScore(key, val);
-        if (source == null) return null;
+        if (source == null) return -1;
         return (int) exist.stream().filter(x -> x.getScore() < source).count();
     }
 
     @SuppressWarnings("unchecked")
     public Integer zRem(String key, String[] vals) {
+        if (checkInvalid(key)) return 0;
         CacheEntry<LinkedHashSet<ZSetEntry>> entry = (CacheEntry<LinkedHashSet<ZSetEntry>>) map.get(key);
         if (entry == null) return 0;
         LinkedHashSet<ZSetEntry> exist = entry.getValue();

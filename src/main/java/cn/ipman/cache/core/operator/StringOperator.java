@@ -2,7 +2,10 @@ package cn.ipman.cache.core.operator;
 
 import cn.ipman.cache.core.AbstractOperator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Description for this class
@@ -14,6 +17,7 @@ public class StringOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public String get(String key) {
+        if (checkInvalid(key)) return null;
         CacheEntry<String> cacheEntry = (CacheEntry<String>) map.get(key);
         if (cacheEntry == null) return null;
         return cacheEntry.getValue();
@@ -24,13 +28,21 @@ public class StringOperator extends AbstractOperator {
     }
 
     public Integer strlen(String key) {
+        if (checkInvalid(key)) return 0;
         return get(key) == null ? 0 : get(key).length();
     }
 
 
     public String[] mGet(String... keys) {
-        return keys == null ? new String[0] : Arrays.stream(keys)
-                .map(this::get).toArray(String[]::new);
+        if (keys == null) return new String[0];
+        List<String> ret = new ArrayList<>();
+        for (String key : keys) {
+            if (!checkInvalid(key)) {
+                ret.add(this.get(key));
+            }
+        }
+        return ret.toArray(new String[0]);
+
     }
 
     public void mSet(String[] keys, String[] vals) {

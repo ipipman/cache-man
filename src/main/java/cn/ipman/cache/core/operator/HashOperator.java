@@ -36,6 +36,7 @@ public class HashOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public String hGet(String key, String hKey) {
+        if (checkInvalid(key)) return null;
         CacheEntry<LinkedHashMap<String, String>> entry = (CacheEntry<LinkedHashMap<String, String>>) map.get(key);
         if (entry == null) return null;
         LinkedHashMap<String, String> exist = entry.getValue();
@@ -45,6 +46,7 @@ public class HashOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public String[] hGetall(String key) {
+        if (checkInvalid(key)) return null;
         CacheEntry<LinkedHashMap<String, String>> entry = (CacheEntry<LinkedHashMap<String, String>>) map.get(key);
         if (entry == null) return null;
         LinkedHashMap<String, String> exist = entry.getValue();
@@ -55,6 +57,7 @@ public class HashOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public String[] hMGet(String key, String[] hKeys) {
+        if (checkInvalid(key)) return null;
         CacheEntry<LinkedHashMap<String, String>> entry = (CacheEntry<LinkedHashMap<String, String>>) map.get(key);
         if (entry == null) return null;
 
@@ -65,6 +68,7 @@ public class HashOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public Integer hLen(String key) {
+        if (checkInvalid(key)) return 0;
         CacheEntry<LinkedHashMap<String, String>> entry = (CacheEntry<LinkedHashMap<String, String>>) map.get(key);
         if (entry == null) return 0;
         LinkedHashMap<String, String> exist = entry.getValue();
@@ -74,7 +78,7 @@ public class HashOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public Integer hExists(String key, String hKey) {
-        if (hKey == null) return 0;
+        if (checkInvalid(key)) return 0;
         CacheEntry<LinkedHashMap<String, String>> entry = (CacheEntry<LinkedHashMap<String, String>>) map.get(key);
         if (entry == null) return 0;
         LinkedHashMap<String, String> exist = entry.getValue();
@@ -83,6 +87,7 @@ public class HashOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public Integer hDel(String key, String[] hKeys) {
+        if (checkInvalid(key)) return 0;
         CacheEntry<LinkedHashMap<String, String>> entry = (CacheEntry<LinkedHashMap<String, String>>) map.get(key);
         if (entry == null) return 0;
 

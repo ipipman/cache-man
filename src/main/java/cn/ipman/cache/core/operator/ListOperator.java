@@ -30,6 +30,7 @@ public class ListOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public String[] lPop(String key, int count) {
+        if (checkInvalid(key)) return null;
         CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
         if (entry == null) return null;
         LinkedList<String> exist = entry.getValue();
@@ -61,6 +62,7 @@ public class ListOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public String[] rPop(String key, int count) {
+        if (checkInvalid(key)) return null;
         CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
         if (entry == null) return null;
         LinkedList<String> exist = entry.getValue();
@@ -78,6 +80,7 @@ public class ListOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public Integer llen(String key) {
+        if (checkInvalid(key)) return 0;
         CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
         if (entry == null) return 0;
         LinkedList<String> exist = entry.getValue();
@@ -87,6 +90,7 @@ public class ListOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public String lindex(String key, int index) {
+        if (checkInvalid(key)) return null;
         CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
         if (entry == null) return null;
         LinkedList<String> exist = entry.getValue();
@@ -98,6 +102,7 @@ public class ListOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public String[] lrange(String key, int start, int end) {
+        if (checkInvalid(key)) return null;
         CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
         if (entry == null) return null;
         LinkedList<String> exist = entry.getValue();

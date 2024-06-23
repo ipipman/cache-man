@@ -32,6 +32,7 @@ public class SetOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public String[] smembers(String key) {
+        if (checkInvalid(key)) return null;
         CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
         if (entry == null) return null;
         LinkedHashSet<String> exist = entry.getValue();
@@ -41,6 +42,7 @@ public class SetOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public Integer scard(String key) {
+        if (checkInvalid(key)) return 0;
         CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
         if (entry == null) return 0;
         LinkedHashSet<String> exist = entry.getValue();
@@ -50,6 +52,7 @@ public class SetOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public Integer sismember(String key, String val) {
+        if (checkInvalid(key)) return 0;
         CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
         if (entry == null) return 0;
         LinkedHashSet<String> exist = entry.getValue();
@@ -58,6 +61,7 @@ public class SetOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public Integer srem(String key, String[] vals) {
+        if (checkInvalid(key)) return 0;
         CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
         if (entry == null) return 0;
         LinkedHashSet<String> exist = entry.getValue();
@@ -69,6 +73,7 @@ public class SetOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
     public String[] sPop(String key, int count) {
+        if (checkInvalid(key)) return null;
         CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
         if (entry == null) return null;
         LinkedHashSet<String> exist = entry.getValue();
