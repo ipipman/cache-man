@@ -79,7 +79,7 @@ public class ListOperator extends AbstractOperator {
 
 
     @SuppressWarnings("unchecked")
-    public Integer llen(String key) {
+    public Integer lLen(String key) {
         if (checkInvalid(key)) return 0;
         CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
         if (entry == null) return 0;
@@ -89,7 +89,7 @@ public class ListOperator extends AbstractOperator {
     }
 
     @SuppressWarnings("unchecked")
-    public String lindex(String key, int index) {
+    public String lIndex(String key, int index) {
         if (checkInvalid(key)) return null;
         CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
         if (entry == null) return null;
@@ -101,7 +101,7 @@ public class ListOperator extends AbstractOperator {
 
 
     @SuppressWarnings("unchecked")
-    public String[] lrange(String key, int start, int end) {
+    public String[] lRange(String key, int start, int end) {
         if (checkInvalid(key)) return null;
         CacheEntry<LinkedList<String>> entry = (CacheEntry<LinkedList<String>>) map.get(key);
         if (entry == null) return null;

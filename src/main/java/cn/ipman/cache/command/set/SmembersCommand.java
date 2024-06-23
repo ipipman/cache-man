@@ -21,7 +21,7 @@ public class SmembersCommand implements Command {
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
-        return Reply.array(cache.smembers(key));
+        return Reply.array(cache.sMembers(key));
     }
 
 

@@ -21,7 +21,7 @@ public class HgetallCommand implements Command {
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
-        return Reply.array(cache.hGetall(key));
+        return Reply.array(cache.hGetAll(key));
     }
 
 

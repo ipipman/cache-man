@@ -15,7 +15,7 @@ import java.util.Random;
 public class SetOperator extends AbstractOperator {
 
     @SuppressWarnings("unchecked")
-    public Integer sadd(String key, String[] vals) {
+    public Integer sAdd(String key, String[] vals) {
         CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
         if (entry == null) {
             entry = new CacheEntry<>(new LinkedHashSet<>());
@@ -31,7 +31,7 @@ public class SetOperator extends AbstractOperator {
 
 
     @SuppressWarnings("unchecked")
-    public String[] smembers(String key) {
+    public String[] sMembers(String key) {
         if (checkInvalid(key)) return null;
         CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
         if (entry == null) return null;
@@ -41,7 +41,7 @@ public class SetOperator extends AbstractOperator {
     }
 
     @SuppressWarnings("unchecked")
-    public Integer scard(String key) {
+    public Integer sCard(String key) {
         if (checkInvalid(key)) return 0;
         CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
         if (entry == null) return 0;
@@ -51,7 +51,7 @@ public class SetOperator extends AbstractOperator {
     }
 
     @SuppressWarnings("unchecked")
-    public Integer sismember(String key, String val) {
+    public Integer sIsMember(String key, String val) {
         if (checkInvalid(key)) return 0;
         CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
         if (entry == null) return 0;
@@ -60,7 +60,7 @@ public class SetOperator extends AbstractOperator {
     }
 
     @SuppressWarnings("unchecked")
-    public Integer srem(String key, String[] vals) {
+    public Integer sRem(String key, String[] vals) {
         if (checkInvalid(key)) return 0;
         CacheEntry<LinkedHashSet<String>> entry = (CacheEntry<LinkedHashSet<String>>) map.get(key);
         if (entry == null) return 0;

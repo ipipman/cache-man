@@ -25,12 +25,12 @@ public class IMApplicationListener implements ApplicationListener<ApplicationEve
 
     @Override
     public void onApplicationEvent(@NonNull ApplicationEvent event) {
-        if (event instanceof ApplicationReadyEvent readyEvent) {
+        if (event instanceof ApplicationReadyEvent) {
             for (IMServerPlugin plugin : plugins) {
                 plugin.init();
                 plugin.startup();
             }
-        } else if (event instanceof ContextClosedEvent closedEvent) {
+        } else if (event instanceof ContextClosedEvent) {
             for (IMServerPlugin plugin : plugins) {
                 plugin.shutdown();
             }

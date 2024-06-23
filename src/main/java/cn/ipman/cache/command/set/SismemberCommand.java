@@ -22,7 +22,7 @@ public class SismemberCommand implements Command {
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
         String val = getValue(args);
-        return Reply.integer(cache.sismember(key, val));
+        return Reply.integer(cache.sIsMember(key, val));
     }
 
 

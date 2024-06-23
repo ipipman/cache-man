@@ -22,7 +22,7 @@ public class LindexCommand implements Command {
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
         int index = Integer.parseInt(getValue(args));
-        return Reply.string(cache.lindex(key, index));
+        return Reply.string(cache.lIndex(key, index));
     }
 
 

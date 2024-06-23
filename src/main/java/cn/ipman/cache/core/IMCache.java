@@ -86,39 +86,39 @@ public class IMCache {
         return listOperator.rPop(key, count);
     }
 
-    public Integer llen(String key) {
-        return listOperator.llen(key);
+    public Integer lLen(String key) {
+        return listOperator.lLen(key);
     }
 
-    public String lindex(String key, int index) {
-        return listOperator.lindex(key, index);
+    public String lIndex(String key, int index) {
+        return listOperator.lIndex(key, index);
     }
 
-    public String[] lrange(String key, int start, int end) {
-        return listOperator.lrange(key, start, end);
+    public String[] lRange(String key, int start, int end) {
+        return listOperator.lRange(key, start, end);
     }
     // ========================= list end ==========================
 
 
     // ========================= set start ==========================
-    public Integer sadd(String key, String[] vals) {
-        return setOperator.sadd(key, vals);
+    public Integer sAdd(String key, String[] vals) {
+        return setOperator.sAdd(key, vals);
     }
 
-    public String[] smembers(String key) {
-        return setOperator.smembers(key);
+    public String[] sMembers(String key) {
+        return setOperator.sMembers(key);
     }
 
-    public Integer scard(String key) {
-        return setOperator.scard(key);
+    public Integer sCard(String key) {
+        return setOperator.sCard(key);
     }
 
-    public Integer sismember(String key, String val) {
-        return setOperator.sismember(key, val);
+    public Integer sIsMember(String key, String val) {
+        return setOperator.sIsMember(key, val);
     }
 
-    public Integer srem(String key, String[] vals) {
-        return setOperator.srem(key, vals);
+    public Integer sRem(String key, String[] vals) {
+        return setOperator.sRem(key, vals);
     }
 
     public String[] sPop(String key, int count) {
@@ -136,8 +136,8 @@ public class IMCache {
         return hashOperator.hGet(key, hKey);
     }
 
-    public String[] hGetall(String key) {
-        return hashOperator.hGetall(key);
+    public String[] hGetAll(String key) {
+        return hashOperator.hGetAll(key);
     }
 
     public String[] hMGet(String key, String[] hKeys) {

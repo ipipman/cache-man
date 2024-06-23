@@ -21,7 +21,7 @@ public class LlenCommand implements Command {
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
-        return Reply.integer(cache.llen(key));
+        return Reply.integer(cache.lLen(key));
     }
 
 

@@ -24,7 +24,7 @@ public class LrangeCommand implements Command {
         String[] params = getParamsNoKey(args);
         int start = Integer.parseInt(params[0]);
         int end = Integer.parseInt(params[1]);
-        return Reply.array(cache.lrange(key, start, end));
+        return Reply.array(cache.lRange(key, start, end));
 
     }
 

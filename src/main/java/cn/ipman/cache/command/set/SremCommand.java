@@ -22,7 +22,7 @@ public class SremCommand implements Command {
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
         String[] vals = getParamsNoKey(args);
-        return Reply.integer(cache.srem(key, vals));
+        return Reply.integer(cache.sRem(key, vals));
     }
 
 }

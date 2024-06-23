@@ -45,7 +45,7 @@ public class HashOperator extends AbstractOperator {
 
 
     @SuppressWarnings("unchecked")
-    public String[] hGetall(String key) {
+    public String[] hGetAll(String key) {
         if (checkInvalid(key)) return null;
         CacheEntry<LinkedHashMap<String, String>> entry = (CacheEntry<LinkedHashMap<String, String>>) map.get(key);
         if (entry == null) return null;

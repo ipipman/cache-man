@@ -22,7 +22,7 @@ public class SaddCommand implements Command {
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
         String[] vals = getParamsNoKey(args);
-        return Reply.integer(cache.sadd(key, vals));
+        return Reply.integer(cache.sAdd(key, vals));
     }
 
 

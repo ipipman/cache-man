@@ -21,7 +21,7 @@ public class ScardCommand implements Command {
     @Override
     public Reply<?> exec(IMCache cache, String[] args) {
         String key = getKey(args);
-        return Reply.integer(cache.scard(key));
+        return Reply.integer(cache.sCard(key));
     }
 
 
