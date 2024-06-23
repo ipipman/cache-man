@@ -22,4 +22,16 @@ public class CommonOperator extends AbstractOperator {
         return keys == null ? 0 : (int) Arrays.stream(keys)
                 .map(map::containsKey).filter(x -> x).count();
     }
+
+
+    public int ttl(String key) {
+        CacheEntry<?> entry = getCacheEntry(key);
+        if (entry == null) return -2;       // key 不存在, 返回-2
+        if (entry.getTtl() == CacheEntry.DEFAULT_TTL) return -1; // key 没有过期时间
+
+        long ret = (entry.getTs() + entry.getTtl() - System.currentTimeMillis()) / 1000;
+        if (ret > 0) return (int) ret;
+        return -1;
+    }
+
 }

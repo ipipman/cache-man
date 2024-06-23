@@ -30,6 +30,7 @@ public class Commands {
         register(new CmdCommand());
         register(new PingCommand());
         register(new InfoCommand());
+        register(new TTLCommand());
 
         // string
         register(new GetCommand());

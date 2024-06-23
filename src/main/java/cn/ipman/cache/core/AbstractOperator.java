@@ -21,11 +21,25 @@ public abstract class AbstractOperator {
         return map;
     }
 
+    protected CacheEntry<?> getCacheEntry(String key) {
+        return map.get(key);
+    }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CacheEntry<T> {
         private T value;
+        private long ts;
+        private long ttl;
+
+        public final static long DEFAULT_TTL = -1000L;
+
+        public CacheEntry(T v){
+            value = v;
+            ts = System.currentTimeMillis();    // created timestamp
+            ttl = DEFAULT_TTL;                  // default alive ttl
+        }
     }
 
     @Data

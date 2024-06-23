@@ -26,9 +26,11 @@ public class IMCache {
     public int exists(String... keys) {
         return commonOperator.exists(keys);
     }
+
+    public int ttl(String key) {
+        return commonOperator.ttl(key);
+    }
     // ========================= common end ==========================
-
-
 
 
     // ========================= string start ==========================
@@ -63,7 +65,6 @@ public class IMCache {
     // ========================= string end ==========================
 
 
-
     // ========================= list start ==========================
     public Integer lPush(String key, String[] vals) {
         return listOperator.lPush(key, vals);
@@ -95,7 +96,6 @@ public class IMCache {
     // ========================= list end ==========================
 
 
-
     // ========================= set start ==========================
     public Integer sadd(String key, String[] vals) {
         return setOperator.sadd(key, vals);
@@ -123,7 +123,6 @@ public class IMCache {
     // ========================= set end ==========================
 
 
-
     // ========================= hash start ==========================
     public Integer hSet(String key, String[] hKeys, String[] hVals) {
         return hashOperator.hSet(key, hKeys, hVals);
@@ -138,7 +137,7 @@ public class IMCache {
     }
 
     public String[] hMGet(String key, String[] hKeys) {
-       return hashOperator.hMGet(key, hKeys);
+        return hashOperator.hMGet(key, hKeys);
     }
 
     public Integer hLen(String key) {
@@ -150,10 +149,9 @@ public class IMCache {
     }
 
     public Integer hDel(String key, String[] hKeys) {
-       return hashOperator.hDel(key, hKeys);
+        return hashOperator.hDel(key, hKeys);
     }
     // ========================= hash end ==========================
-
 
 
     // ========================= zSet end ==========================
@@ -162,7 +160,7 @@ public class IMCache {
     }
 
     public Integer zCard(String key) {
-       return zSetOperator.zCard(key);
+        return zSetOperator.zCard(key);
     }
 
     public Integer zCount(String key, double min, double max) {
