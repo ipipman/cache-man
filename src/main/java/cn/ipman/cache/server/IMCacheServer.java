@@ -59,7 +59,7 @@ public class IMCacheServer implements IMServerPlugin {
                     });
 
             channel = b.bind(port).sync().channel();
-            System.out.println("开启netty redis服务器，端口为 " + port);
+            System.out.println("开启netty redis服务器，端口为 " + port + ", 线程ID为 " +Thread.currentThread().getId());
             channel.closeFuture().sync();
         } catch (Exception e) {
             throw new RuntimeException(e);
