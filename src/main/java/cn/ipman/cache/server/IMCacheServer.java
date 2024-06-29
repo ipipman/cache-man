@@ -2,10 +2,7 @@ package cn.ipman.cache.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.epoll.EpollChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -13,6 +10,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,6 +33,7 @@ public class IMCacheServer implements IMServerPlugin {
         workerGroup = new NioEventLoopGroup(16, new DefaultThreadFactory("redis-work"));
     }
 
+    @Async
     @Override
     public void startup() {
         try {
@@ -65,8 +64,7 @@ public class IMCacheServer implements IMServerPlugin {
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
+            shutdown();
         }
     }
 
