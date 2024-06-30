@@ -18,7 +18,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <cache.version>2.0.0</cache.version>
+        <cache.version>3.0.0</cache.version>
         <java.version>17</java.version>
     </properties>
 
@@ -60,7 +60,6 @@
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

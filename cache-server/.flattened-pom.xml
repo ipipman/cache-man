@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.ipipman</groupId>
   <artifactId>cache-server</artifactId>
-  <version>2.0.0</version>
+  <version>3.0.0</version>
   <name>cache-server</name>
   <description>cache-server</description>
   <url>https://github.com/ipipman/cache-man/cache-server</url>
@@ -41,7 +41,7 @@
     <dependency>
       <groupId>io.github.ipipman</groupId>
       <artifactId>cache-core</artifactId>
-      <version>2.0.0</version>
+      <version>3.0.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
