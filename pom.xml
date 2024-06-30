@@ -25,6 +25,7 @@
     <modules>
         <module>cache-core</module>
         <module>cache-server</module>
+        <module>cache-test-jedis</module>
     </modules>
 
     <url>https://github.com/ipipman/cache-man</url>
@@ -176,7 +177,7 @@
                             <tokenAuth>true</tokenAuth>
                             <autoPublish>true</autoPublish>
                             <excludeArtifacts>
-<!--                                <excludeArtifact>cache-man</excludeArtifact>-->
+                                <excludeArtifact>cache-test-jedis</excludeArtifact>
                             </excludeArtifacts>
                         </configuration>
                     </plugin>

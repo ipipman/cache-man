@@ -1,4 +1,4 @@
-package cn.ipman.cache.server.jedis;
+package cn.ipman.cache.test.jedis.jedis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

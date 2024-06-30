@@ -1,6 +1,5 @@
 package cn.ipman.cache.server.config;
 
-import cn.ipman.cache.server.jedis.JedisUtil;
 import cn.ipman.cache.server.server.IMServerPlugin;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +26,6 @@ public class IMApplicationListener implements ApplicationListener<ApplicationEve
     @Autowired
     List<IMServerPlugin> plugins;
 
-
-    @Autowired
-    JedisUtil jedisUtil;
-
     @Override
     public void onApplicationEvent(@NonNull ApplicationEvent event) {
 
@@ -52,10 +47,6 @@ public class IMApplicationListener implements ApplicationListener<ApplicationEve
             executor.scheduleWithFixedDelay(() -> {
                 System.out.println("Netty redis起动后, 定时任务进程ID为 "
                         + Thread.currentThread().getId() + ", 父线程ID为 " + inheritableThreadLocal.get());
-
-                System.out.println(jedisUtil.set("a", "1", 0));
-                System.out.println(jedisUtil.get("a", 0));
-
 
             }, 2, 2, TimeUnit.SECONDS);
 

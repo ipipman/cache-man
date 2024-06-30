@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>io.github.ipipman</groupId>
         <artifactId>cache-man</artifactId>
@@ -10,35 +9,29 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>cache-server</artifactId>
+    <artifactId>cache-test-jedis</artifactId>
     <version>${cache.version}</version>
 
-    <name>cache-server</name>
-    <description>cache-server</description>
+    <name>cache-test-jedis</name>
+    <description>cache-test-jedis</description>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>io.github.ipipman</groupId>
-            <artifactId>cache-core</artifactId>
-            <version>${cache.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.104.Final</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.ipipman</groupId>
+            <artifactId>cache-server</artifactId>
+            <version>${cache.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -55,19 +48,16 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jacoco</groupId>
-            <artifactId>org.jacoco.agent</artifactId>
-            <version>0.8.7</version>
-            <scope>test</scope>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.6.2</version>
         </dependency>
 
         <dependency>
-            <groupId>org.luaj</groupId>
-            <artifactId>luaj-jse</artifactId>
-            <version>3.0.1</version>
-            <scope>test</scope>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.6.2</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -77,8 +67,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.2.3</version>
                 <configuration>
-                    <classifier>boot</classifier>
-                    <mainClass>cn.ipman.cache.server.CacheServerApplication</mainClass> <!-- 正确填写你的主类全限定名 -->
+                    <mainClass>cn.ipman.cache.test.jedis.CacheTestJedisApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -106,26 +95,6 @@
                         <version>3.2.3</version>
                     </dependency>
                 </dependencies>
-            </plugin>
-
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

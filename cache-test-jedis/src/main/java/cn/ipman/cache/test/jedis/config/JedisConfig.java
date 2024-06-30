@@ -1,4 +1,4 @@
-package cn.ipman.cache.server.config;
+package cn.ipman.cache.test.jedis.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
