@@ -11,16 +11,16 @@
 
     <groupId>io.github.ipipman</groupId>
     <artifactId>cache-man</artifactId>
-    <version>0.0.1</version>
+    <version>${cache.version}</version>
 
     <name>cache-man</name>
     <description>cache-man</description>
     <packaging>pom</packaging>
 
     <properties>
+        <cache.version>2.0.0</cache.version>
         <java.version>17</java.version>
     </properties>
-
 
     <modules>
         <module>cache-core</module>
@@ -59,6 +59,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

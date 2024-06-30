@@ -6,13 +6,13 @@
     <parent>
         <groupId>io.github.ipipman</groupId>
         <artifactId>cache-man</artifactId>
-        <version>0.0.1</version>
+        <version>${cache.version}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>cn.ipman</groupId>
     <artifactId>cache-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${cache.version}</version>
+
     <name>cache-server</name>
     <description>cache-server</description>
 
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>cn.ipman</groupId>
             <artifactId>cache-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${cache.version}</version>
         </dependency>
 
         <dependency>
@@ -73,7 +73,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.2.3</version>
                 <configuration>
+                    <mainClass>cn.ipman.cache.server.CacheServerApplication</mainClass> <!-- 正确填写你的主类全限定名 -->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

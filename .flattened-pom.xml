@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.ipipman</groupId>
   <artifactId>cache-man</artifactId>
-  <version>0.0.1</version>
+  <version>2.0.0</version>
   <packaging>pom</packaging>
   <name>cache-man</name>
   <description>cache-man</description>
