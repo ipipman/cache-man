@@ -27,6 +27,7 @@ public class Commands {
     private static void initCommands() {
 
         // common
+        register(new SelectCommand());
         register(new CmdCommand());
         register(new PingCommand());
         register(new InfoCommand());
