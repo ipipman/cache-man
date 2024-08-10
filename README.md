@@ -238,9 +238,9 @@ public class IMApplicationListener implements ApplicationListener<ApplicationEve
 
 下面测试下Server启动后， 用 **redis-cli** 或 **telnet 127.0.0.1 6379** 去连接测试
 
-![image-20240810174144740](https://ipman-1304583208.cos.ap-nanjing.myqcloud.com/rpcman/2024-08-10-100125.png)redis-cli
+![image-20240810174144740](https://ipman-1304583208.cos.ap-nanjing.myqcloud.com/rpcman/2024-08-10-100125.png)
 
-
+redis-cli
 
 ![image-20240810174226188](https://ipman-1304583208.cos.ap-nanjing.myqcloud.com/rpcman/2024-08-10-100139.png)
 
